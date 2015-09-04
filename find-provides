@@ -1,8 +1,7 @@
 #! /bin/sh
+# This script is used to inject the Varnish ABI into the RPM Provides.
 
-# This script is used to inject the Varnish ABI into the provides.
-
-set -x
+set -o errexit
 
 if [ -x /usr/lib/rpm/redhat/find-provides ]; then
     /usr/lib/rpm/redhat/find-provides "$@"
@@ -10,11 +9,13 @@ elif [ -x /usr/lib/rpm/find-provides ]; then
     /usr/lib/rpm/find-provides "$@"
 fi
 
-cd $(dirname $0)/..
+# We don't install vcs_version.h, so we can't use RPM_BUILD_ROOT directly.
+cd $RPM_BUILD_ROOT/../../BUILD/varnish*
 
 printf '#include "vcs_version.h"\nVCS_Version\n' \
         | cpp - -Iinclude | sed -e '/^"/!d' -e 's/\"//g' -e 's/^/varnishabi-strict-/'
 
+find . -name vrt.h 1>&2
 printf '#include "vrt.h"\nvarnishabi- VRT_MAJOR_VERSION . VRT_MINOR_VERSION\n' \
 	| cpp - -Iinclude \
 	| sed -e '/^varnishabi-/!d' -e 's/U//g' -e 's/ //g'
