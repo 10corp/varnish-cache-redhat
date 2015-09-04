@@ -1,18 +1,18 @@
-GCC
-===
-Varnish requires a GCC-compiler compatible with the compiler used to
-build varnish with. This means GCC 3.4.6 on a standard RHEL4 system.
+Redhat packaging files for Varnish Cache
+========================================
 
-Varnish should work fine with GCC 3.3 and above.
+These are the packaging files that are used when building
+the official RPM packages for Varnish Cache.
 
 Building a RPM package from a git checkout
-==========================================
+------------------------------------------
 
 You may build an rpm package direct from a git checkout. Here is an
 example on how you may do this:
 
 git clone git://git.varnish-cache.org/varnish-cache
 cd varnish-cache
+
 sed -i "s/^Release: .*/Release: 0.git$(date +%Y%m%d)%{?dist}/" \
     redhat/varnish.spec
 ./autogen.sh && ./configure
@@ -25,7 +25,8 @@ rpmbuild --define "dist .el5" --rebuild /path/to/varnish-3.0-0.git20110203.src.r
 
 
 Configuration of addresses and ports
-====================================
+------------------------------------
+
 In this package, varnish is configured to make the accelerator daemon
 listen to port 6081. The administration interface listens to port 6082
 on 127.0.0.1. Addresses and ports can be changed in
@@ -39,21 +40,4 @@ read the vcl(7) man page for more information on the vcl language.
 
 To gain actual value from varnish, you may want to move the listening
 port to port 80, and your webserver to 8080 or similar.
-
-Running with jemalloc on ppc or ppc64 on fedora: Edit and recompile
-===================================================================
-To get a package through to Fedora, it has to build in Red Hat's Koji
-build environment. Their ppc and ppc64 builders run mock on a RHEL
-ppc64 kernel. Our use of jemalloc does not work on this kernel, and
-the build stays unsuccessful. As ppc64 is not the primary target of
-varnish development, it may take some time to get this bug fixed.
-To get the package through to Fedora, jemalloc is disabled in the ppc
-and ppc64 builds.
-
-Now, varnish with jemalloc enabled is known to work at least on the
-ppc (32bit) kernel in Fedora 9. If you run on ppc, and have a workload
-that suits jemalloc better, you might want to change the specfile and
-recompile.  We would very much like feedback from anyone running
-varnish on Fedora's own ppc64 kernel.
-
 
