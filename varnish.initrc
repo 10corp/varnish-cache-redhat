@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 #
 # Init script for Varnish Cache.
 #
