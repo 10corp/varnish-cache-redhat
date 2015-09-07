@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 # This script is used to inject the Varnish ABI into the RPM Provides.
 
 set -o errexit
@@ -9,8 +9,14 @@ elif [ -x /usr/lib/rpm/find-provides ]; then
     /usr/lib/rpm/find-provides "$@"
 fi
 
+env 1>&2
+pwd 1>&2
+find /builddir/ -name vcs_version.h 1>&2
+
 # We don't install vcs_version.h, so we can't use RPM_BUILD_ROOT directly.
-cd $RPM_BUILD_ROOT/../../BUILD/varnish*
+cd /builddir/build/BUILD/varnish* || true
+cd ${RPM_BUILD_ROOT}/../../BUILD/varnish* || true
+
 
 printf '#include "vcs_version.h"\nVCS_Version\n' \
         | cpp - -Iinclude | sed -e '/^"/!d' -e 's/\"//g' -e 's/^/varnishabi-strict-/'
