@@ -126,9 +126,9 @@ rh_status_q() {
 
 configtest() {
     if [ -f "$VARNISH_VCL_CONF" ]; then
-        $exec -f "$VARNISH_VCL_CONF" -C "$DAEMON_OPTS" -n /tmp > /dev/null && echo "Syntax ok"
+        $exec -C $DAEMON_OPTS -n /tmp 2>/dev/null && echo "Syntax ok"
     else
-	echo "VARNISH_VCL_CONF is  unset or does not point to a file"
+	echo "VARNISH_VCL_CONF is unset or does not point to a file."
     fi
 }
 
