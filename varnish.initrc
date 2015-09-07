@@ -72,8 +72,7 @@ start() {
 		echo -n "Please put configuration options in $config"
 		return 6
 	else
-		# Varnish always gives output on STDOUT
-		daemon --pidfile $pidfile $exec -P $pidfile "$DAEMON_OPTS"
+		daemon --pidfile $pidfile $exec "$DAEMON_OPTS" -P $pidfile
 		retval=$?
 		if [ $retval -eq 0 ]
 		then
