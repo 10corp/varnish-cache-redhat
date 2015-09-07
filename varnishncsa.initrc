@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# varnishncsa Control the Varnish NCSA logging daemon
+# Control the Varnish Cache NCSA logging daemon
 #
 # chkconfig: - 90 10
 # description: Varnish Cache logging daemon

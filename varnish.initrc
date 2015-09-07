@@ -1,9 +1,9 @@
 #! /bin/sh
 #
-# varnish Control the Varnish Cache
+# Init script for Varnish Cache.
 #
 # chkconfig: - 90 10
-# description: Varnish is a high-perfomance HTTP accelerator
+# description: Varnish is a high-performance HTTP accelerator
 # processname: varnishd
 # config: /etc/sysconfig/varnish
 # pidfile: /var/run/varnish.pid
@@ -16,7 +16,7 @@
 # Default-Stop:
 # Should-Start: $syslog
 # Short-Description: start and stop varnishd
-# Description: Varnish is a high-perfomance HTTP accelerator
+# Description: Varnish is a high-performance HTTP accelerator
 ### END INIT INFO
 
 # Source function library.
