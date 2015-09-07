@@ -1,5 +1,5 @@
 [Unit]
-Description=Varnish a high-performance HTTP accelerator
+Description=Varnish, a high-performance HTTP accelerator
 After=syslog.target network.target
 
 [Service]

@@ -15,15 +15,15 @@ URL: https://www.varnish-cache.org/
 Source0: %{name}-%{version}%{?vd_rc}.tar.gz
 #Source0: %{name}-trunk.tar.gz
 Source1: varnish.initrc
-Source2: varnishlog.initrc
+Source2: varnish.sysconfig
 Source3: varnish.logrotate
-Source4: varnishlog.service
-Source5: varnishncsa.initrc
-Source6: varnishncsa.service
-Source7: varnish.params
-Source8: varnish_reload_vcl
-Source9: varnish.service
-Source10: varnish.sysconfig
+Source4: varnish_reload_vcl
+Source5: varnish.params
+Source6: varnish.service
+Source7: varnishlog.initrc
+Source8: varnishlog.service
+Source9: varnishncsa.initrc
+Source10: varnishncsa.service
 Source11: find-provides
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -57,27 +57,23 @@ Requires(preun): systemd-units
 Requires(postun): systemd-units
 BuildRequires: systemd-units
 %endif
-
-# Varnish actually needs gcc installed to work. It uses the C compiler
-# at runtime to compile the VCL configuration files. This is by design.
 Requires: gcc
 
 %description
 This is Varnish Cache, a high-performance HTTP accelerator.
 
 Varnish Cache stores web pages in memory so web servers don't have to
-create the same web page over and over again. Varnish serves pages
-much faster than any application server; giving the website a
+create the same web page over and over again. Varnish Cache serves
+pages much faster than any application server; giving the website a
 significant speed up.
 
-Documentation wiki and additional information about Varnish is
+Documentation wiki and additional information about Varnish Cache is
 available on the following web site: https://www.varnish-cache.org/
 
 %package libs
 Summary: Libraries for %{name}
 Group: System Environment/Libraries
 BuildRequires: ncurses-devel
-#Obsoletes: libvarnish1
 
 %description libs
 Libraries for %{name}.
@@ -142,9 +138,10 @@ make %{?_smp_mflags} V=1
 	varnish.initrc varnishlog.initrc varnishncsa.initrc
 %endif
 
+rm -rf doc/html/_sources
 #rm -rf doc/sphinx/build/html/_sources
 #mv doc/sphinx/build/html doc
-#rm -rf doc/sphinx/build
+rm -rf doc/sphinx/build
 
 %check
 # rhel5 on ppc64 is just too strange
@@ -255,7 +252,6 @@ rm -rf %{buildroot}
 %files docs
 %defattr(-,root,root,-)
 %doc LICENSE
-%doc doc/sphinx
 %doc doc/html
 %doc doc/changes*.html
 
