@@ -8,20 +8,20 @@ Building a RPM package from a git checkout
 ------------------------------------------
 
 You may build an rpm package direct from a git checkout. Here is an
-example on how you may do this:
+example on how you may do this::
 
-git clone git://git.varnish-cache.org/varnish-cache
-cd varnish-cache
+  git clone git://git.varnish-cache.org/varnish-cache
+  cd varnish-cache
 
-sed -i "s/^Release: .*/Release: 0.git$(date +%Y%m%d)%{?dist}/" \
+  sed -i "s/^Release: .*/Release: 0.git$(date +%Y%m%d)%{?dist}/" \
     redhat/varnish.spec
-./autogen.sh && ./configure
-make dist && rpmbuild -ts varnish-trunk.tar.gz
+  ./autogen.sh && ./configure
+  make dist && rpmbuild -ts varnish-trunk.tar.gz
 
 This builds a source rpm. Then you can, for example on a RHEL5 system,
-do something like this:
+do something like this::
 
-rpmbuild --define "dist .el5" --rebuild /path/to/varnish-3.0-0.git20110203.src.rpm
+  rpmbuild --define "dist .el5" --rebuild /path/to/varnish-3.0-0.git20110203.src.rpm
 
 
 Configuration of addresses and ports
@@ -40,4 +40,3 @@ read the vcl(7) man page for more information on the vcl language.
 
 To gain actual value from varnish, you may want to move the listening
 port to port 80, and your webserver to 8080 or similar.
-
